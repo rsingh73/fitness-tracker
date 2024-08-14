@@ -1,13 +1,73 @@
 <section>
-  <form class="row" #f="ngForm" (ngSubmit)="onSubmit(f)">
-    <mat-form-field appearance="outline">
-      <mat-label>Email</mat-label>
-      <input type="email" matInput placeholder="Email" ngModel name="email">
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Password</mat-label>
-      <input type="password" matInput placeholder="Password" ngModel name="password">
-    </mat-form-field>
-    <button type="submit" mat-raised-button color="primary">Submit</button>
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <div class="container-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input
+          type="email"
+          matInput
+          placeholder="Email"
+          ngModel
+          name="email"
+          email
+          required
+          #emailInput="ngModel"
+        />
+        @if(emailInput.hasError('required')) {
+        <mat-error>Field must not be empty</mat-error>
+        } @if(!emailInput.hasError('required')) {
+        <mat-error>E-mail is invalid</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline"
+        hintLabel="Should be at least 6 characters long"
+      >
+        <mat-label>Password</mat-label>
+        <input
+          type="password"
+          matInput
+          placeholder="Password"
+          ngModel
+          name="password"
+          required
+          minlength="6"
+          #pwInput="ngModel"
+        />
+        <mat-hint align="end">{{ pwInput.value?.length }} / 6</mat-hint>
+        <mat-error>Has to be at least 6 characters long</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Your birthdate</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          [max]="maxDate()"
+          ngModel
+          name="birthdate"
+          #bdInput="ngModel"
+          required
+        />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        @if(bdInput.hasError('required')) {
+        <mat-error>Birthdate must not be empty</mat-error>
+        }
+      </mat-form-field>
+      <mat-checkbox ngModel name="agree" required color="primary"
+        >Agree to Terms and conditions</mat-checkbox
+      >
+      <button
+        type="submit"
+        mat-raised-button
+        color="primary"
+        [disabled]="!f.valid"
+      >
+        Submit
+      </button>
+    </div>
   </form>
 </section>
