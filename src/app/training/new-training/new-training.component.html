@@ -1,1 +1,27 @@
-<p>new-training works!</p>
+<section class="container">
+  <mat-card appearance="outlined" class="card">
+    <mat-card-header class="center-content">
+      <mat-card-title> Time to start workout </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="center-content">
+      <mat-form-field appearance="outline">
+        <mat-label>Favorite food</mat-label>
+        <mat-select>
+          @for (exercise of exercises; track exercise) {
+          <mat-option [value]="exercise.value">{{ exercise.text }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions class="center-content">
+      <button
+        type="submit"
+        mat-flat-button
+        color="primary"
+        (click)="onStartTraining()"
+      >
+        Start
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</section>
